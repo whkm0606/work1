@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% extends 'layout.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_css_bootstrap-datepicker.min.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增员工</div>
+  <div class="panel-body">
+  <form class="form-horizontal" method="post" novalidate>
+{#      novalidate不要浏览器给我们校验#}
+      {% csrf_token %}
+
+        {% for filde in form %}
+            <div class="form-group">
+        <label  class="col-sm-2 control-label">{{ filde.label }}</label>
+            <div class="col-sm-10">
+            {{ filde }}
+{#              <input type="text" class="form-control"  placeholder="姓名"  name="name">#}
+                <span style="color: red">{{ filde.errors.0 }}</span>
+            </div>
+    </div>
+        {% endfor %}
+    <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">提交</button>
+            </div>
+    </div>
+</form>
+  </div>
+</div>
+  </div>
+{% endblock%}
+{% block js %}
+    <script src="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_js_bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_locales_bootstrap-datepicker.zh-CN.min.js' %}"></script>
+    <script>
+        $(function (){
+            $('#id_create_time').datepicker({
+                format:"yyyy-mm-dd",
+                startDate:'8',
+                language:"zh-CN",
+                autoclose: true
+            });
+        })
+    </script>
+{% endblock %}

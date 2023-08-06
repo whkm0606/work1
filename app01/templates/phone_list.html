@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-primary" href="/phone_add/">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                新增号码
+            </a>
+       <div class="col-lg-6" style="float: right; width: 300px">
+           <form method="get">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search for..." name="q" value="{{ seacher_data }}">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              </span>
+        </div>
+       </form>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+          号码列表
+      </div>
+      <!-- Table -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>手机号</th>
+            <th>价格</th>
+              <th>等级</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for phone in phone_list %}
+          <tr>
+            <th scope="row">{{ phone.id }}</th>
+            <td>{{ phone.phone }}</td>
+             <td>{{ phone.price}}</td>
+              <td>{{ phone.get_level_display}}</td>
+             <td>{{ phone.get_status_display }}</td>
+            <td>
+                <a class="btn btn-primary btn-xs" href="/phone_edit/{{ phone.id }}">编辑</a>
+                <a class="btn btn-danger btn-xs" href="/phone_del/?nid={{ phone.id }}">删除</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  <ul class="pagination">
+        {{ page_string }}
+  </ul>
+       </form>
+      </div>
+      </ul>
+
+</div>
+</div>
+
+{% endblock %}

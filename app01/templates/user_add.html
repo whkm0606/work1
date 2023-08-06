@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+{% extends 'layout.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_css_bootstrap-datepicker.min.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container">
+    <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增员工</div>
+  <div class="panel-body">
+  <form class="form-horizontal" method="post">
+            {% csrf_token %}
+          <div class="form-group" style="">
+
+            <label  class="col-sm-2 control-label">用户名</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control"  placeholder="姓名"  name="name">
+            </div>
+
+              <label  class="col-sm-2 control-label">密码</label>
+              <div class="col-sm-10">
+              <input type="password" class="form-control"  placeholder="密码"  name="pwd">
+            </div>
+
+              <label for="inputEmail3" class="col-sm-2 control-label">性别</label>
+              <div class="col-sm-10">
+                  <select class="form-control" name="gender">
+                      {% for gender in gender_choices  %}
+                           <option value={{ gender.0 }}>{{gender.1 }}</option>
+                       {% endfor %}
+                  </select>
+            </div>
+
+              <label for="inputEmail3" class="col-sm-2 control-label">年龄</label>
+               <div class="col-sm-10">
+              <input type="text" class="form-control"  placeholder="年龄"  name="age">
+            </div>
+
+          <label for="inputEmail3" class="col-sm-2 control-label">入职时间</label>
+               <div class="col-sm-10">
+              <input id="dt" type="text" class="form-control"  placeholder="入职时间"  name="ct" >
+            </div>
+
+            <label for="inputEmail3" class="col-sm-2 control-label">余额</label>
+               <div class="col-sm-10">
+              <input type="text" class="form-control"  placeholder="余额"  name="account">
+            </div>
+
+              <label for="inputEmail3" class="col-sm-2 control-label">部门</label>
+              <div class="col-sm-10">
+
+                   <select class="form-control" name="depart">
+
+                       {% for depart in depart_list  %}
+                           <option value={{ depart.id }} >{{ depart.title }}</option>
+                       {% endfor %}
+
+                  </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-default">提交</button>
+            </div>
+          </div>
+</form>
+  </div>
+</div>
+  </div>
+{% endblock%}
+
+
+{% block js %}
+    <script src="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_js_bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'plugings/cdn.bootcdn.net_ajax_libs_bootstrap-datepicker_1.9.0_locales_bootstrap-datepicker.zh-CN.min.js' %}"></script>
+    <script>
+        $(function (){
+            $('#dt').datepicker({
+                format:"yyyy-mm-dd",
+                startDate:'8',
+                language:"zh-CN",
+                autoclose: true
+            });
+        })
+    </script>
+{% endblock %}

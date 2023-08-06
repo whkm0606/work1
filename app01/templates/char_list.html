@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+          <div class="panel-heading">折线图</div>
+           <div class="panel-body">
+               <div id="m1" style="width: 100%;height: 400px;"></div>
+           </div>
+        </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">柱状图</div>
+                        <div class="panel-body">
+                            <div id="m2" style="width: 100%;height: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">饼状图</div>
+                        <div class="panel-body">
+                            <div id="m3" style="width: 100%;height: 400px;"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{% static 'js/echarts.js' %}"></script>
+     <script type="text/javascript">
+     $(function (){
+            InitBar();
+                 })
+
+
+
+
+     function InitBar(){
+         // 基于准备好的dom，初始化echarts实例
+            var myChart1 = echarts.init(document.getElementById('m1'));
+            var myChart2 = echarts.init(document.getElementById('m2'));
+            var myChart3 = echarts.init(document.getElementById('m3'));
+         // 指定图表的配置项和数据
+            var option1 = {
+                  title: {
+                    text: "部门销售曲线",
+                 textAlign: "auto",
+                 left: "center",
+                  },
+                  tooltip: {
+                    trigger: 'axis'
+                  },
+                  legend: {
+                    data: [],//
+                      bottom:0
+                  },
+                  {#grid: {#}
+                  {#  left: '3%',#}
+                  {#  right: '4%',#}
+                  {#  bottom: '3%',#}
+                  {#  containLabel: true#}
+                  {# }, #}
+                  toolbox: {
+                    feature: {
+                      saveAsImage: {}
+                    }
+                  },
+                  xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: []//
+                  },
+                  yAxis: {
+                    type: 'value'
+                  },
+                  series: []//
+                };
+            var option2 = {
+             title: {
+                 text: "员工业绩展示",
+                 textAlign: "auto",
+                 left: "center",
+             },
+             tooltip: {},
+             legend: {
+                 data: [],//
+                 bottom: 0
+             },
+             xAxis: {
+                 data: []//
+             },
+             yAxis: {},
+             series: []//
+         };
+            var option3 = {
+          title: {
+            text: '支出占比',
+            subtext: 'Fake Data',
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'item',
+          },
+          legend: {
+              bottom:0
+          },
+          series: [
+            {
+              name: '支出',
+              type: 'pie',
+              radius: '50%',
+              data: [],//
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+    };
+        //获取图表所需的数据
+         $.ajax({
+            url:"/chart_bar/",
+             type:"get",
+             dataType:"JSON",
+             success(res){
+                console.log(res)
+                //将后台返回的数据，更新到option中
+                    if (res.status){
+                        option1.legend.data = res.data.legend_data1
+                        option1.xAxis.data = res.data.xAxis_data1
+                        option1.series = res.data.series_data1
+
+                        option2.legend.data = res.data.legend_data2
+                        option2.xAxis.data = res.data.xAxis_data2
+                        option2.series = res.data.series_data2
+
+                        option3.series[0].data = res.data.series_data3
+
+                    }
+                // 使用刚指定的配置项和数据显示图表。
+
+                myChart2.setOption(option2);
+                    myChart3.setOption(option3),
+                        myChart1.setOption(option1)
+             }
+         })
+     }
+    </script>
+{% endblock %}

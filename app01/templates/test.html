@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block content %}
+<input    id = "btnadd" type="button" class="btn btn-primary" value="点击" onclick="clickMe();"/>
+{% endblock %}
+{% block js %}
+    <script type="text/javascript">
+    $(function (){
+        OrderAddEvent();
+    })
+    function OrderAddEvent(){
+        $("#btnadd").click(function (){
+            //点击按钮显示对话框
+            console.log("111")
+        });
+    }
+        function clickMe(){
+            $.ajax({
+                url:"/test/ajax/",
+                type:"get",
+                data:{
+                    a:11,
+                    b:22
+                },
+                success:function (res){
+                    console.log(res)
+                }
+            })
+        }
+
+    </script>
+{% endblock %}

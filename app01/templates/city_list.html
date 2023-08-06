@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div style="margin-bottom: 10px">
+            <a class="btn btn-primary" href="/city_add/">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                新增城市
+            </a>
+    </div>
+
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">
+          <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+          号码列表
+      </div>
+      <!-- Table -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>名称</th>
+            <th>人口</th>
+              <th>头像</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for city in city_list %}
+          <tr>
+            <th scope="row">{{ city.id }}</th>
+            <td>{{ city.name }}</td>
+             <td>{{ city.count}}</td>
+              <td><img src="../media/{{ city.img}} " style="width: 150px;height: 100%"></td>
+            <td>
+                <a class="btn btn-primary btn-xs" href="">编辑</a>
+                <a class="btn btn-danger btn-xs" href="">删除</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+       </form>
+      </div>
+      </ul>
+
+</div>
+</div>
+
+{% endblock %}
